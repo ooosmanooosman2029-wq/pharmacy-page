@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نواقص صيدلية السعد - نسخة مطورة</title>
+    </head>
+<body>
+    <button class="reset-btn" style="background:#ef4444; color:white; margin: 10px;" onclick="bulkDelete()">حذف المحدد</button>
+    
+    <script>
+        // دالة الحذف الجماعي (انسخها وضعها مع سكربتاتك)
+        function bulkDelete() {
+            const checkboxes = document.querySelectorAll('.row-checkbox:checked');
+            if (checkboxes.length === 0) return alert('لم تقم بتحديد أي صنف!');
+            if (confirm('هل أنت متأكد من حذف ' + checkboxes.length + ' صنف؟')) {
+                checkboxes.forEach(cb => {
+                    const id = cb.getAttribute('data-id');
+                    deleteItem(id); // دالتك الأصلية
+                });
+                saveState(); 
+                renderTable();
+            }
+        }
+
+        // زيادة العرض إلى 200 (ابحث في كودك عن itemsPerPage أو الـ slice وغيّر الرقم لـ 200)
+        const itemsPerPage = 200; 
+
+        // تأكد أن دالة saveState() موجودة في كودك ليتم الحفظ تلقائياً
+        function saveState() {
+            localStorage.setItem('pharmacy_data', JSON.stringify({
+                quantities: quantities,
+                ordered: Array.from(ordered)
+            }));
+        }
+    </script>
+</body>
+</html>
